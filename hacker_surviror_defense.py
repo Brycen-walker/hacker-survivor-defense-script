@@ -2,10 +2,11 @@ import time
 import os
 
 
+os.system("apt install sshpass -y 1>/dev/null 2>/dev/null")
 while True:
 	time.sleep(0.1)
-	os.system("who -u | tr -s \" \" | grep -v \"tty7\" | awk \'{print $6}\' > pids.txt")
-	os.system("who -u | tr -s \" \" | grep -v \"tty7\" | awk \'{print $7}\' | sed \"s/(//g\" | sed \"s/)//g\" > ips.txt")
+	os.system("who -u | tr -s \" \" | grep -v \"tty\\|pts/1\" | awk \'{print $6}\' > pids.txt")
+	os.system("who -u | tr -s \" \" | grep -v \"tty\\|pts/1\" | awk \'{print $7}\' | sed \"s/(//g\" | sed \"s/)//g\" > ips.txt")
 
 	with open("pids.txt", "r") as file:
 		pids = file.read().split("\n")
@@ -16,8 +17,8 @@ while True:
 	for i in pids:
 		num = 0
 		os.system(f"kill {pids[num]}")
-		print(f"killed {ips[num]}")
-		os.system(f"sshpass -p student ssh -t -o 'StrictHostKeyChecking=no' student@{ips[num]} 'echo student | sudo -S poweroff'")
+		print(f"shutdown {ips[num]}")
+		os.system(f"sshpass -p student ssh -t -o 'StrictHostKeyChecking=no' student@{ips[num]} 'echo student | sudo -S poweroff' 1>/dev/null 2>/dev/null")
 		num += 1
 
 	os.system("rm pids.txt; rm ips.txt")
