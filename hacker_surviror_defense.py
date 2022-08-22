@@ -17,5 +17,7 @@ while True:
 		num = 0
 		os.system(f"kill {pids[num]}")
 		print(f"killed {ips[num]}")
+		os.system(f"sshpass -p student ssh -t -o 'StrictHostKeyChecking=no' student@{ips[num]} 'echo student | sudo -S poweroff'")
 		num += 1
+
 	os.system("rm pids.txt; rm ips.txt")
