@@ -11,8 +11,8 @@ print("\nby brycen walker\n-----------------------------------------------------
 os.system("apt install sshpass -y 1>/dev/null 2>/dev/null")
 while True:
 	time.sleep(0.1)
-	os.system("who -u | tr -s \" \" | awk \'{print $6}\' > pids.txt")
-	os.system("who -u | tr -s \" \" | awk \'{print $7}\' | sed \"s/(//g\" | sed \"s/)//g\" > ips.txt")
+	os.system("who -u | tr -s \" \" | grep -v \"tty\\|pts/1\" | awk \'{print $6}\' > pids.txt")
+	os.system("who -u | tr -s \" \" | grep -v \"tty\\|pts/1\" | awk \'{print $7}\' | sed \"s/(//g\" | sed \"s/)//g\" > ips.txt")
 
 	with open("pids.txt", "r") as file:
 		pids = file.read().split("\n")
